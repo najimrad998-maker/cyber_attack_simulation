@@ -178,6 +178,12 @@
         .animate-in {
             animation: slideIn 0.5s ease-out;
         }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+        }
     </style>
 </head>
 <body>
@@ -190,6 +196,12 @@
         </div>
         <div class="login-body">
             <div id="alertContainer"></div>
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Sending security alert...</p>
+            </div>
             <form id="loginForm">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email Address</label>
@@ -205,7 +217,7 @@
                         <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-login">
+                <button type="submit" class="btn btn-login" id="loginBtn">
                     <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
                 </button>
             </form>
@@ -293,11 +305,29 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
-        // Configuration
+        // ============================================
+        // EMAILJS CONFIGURATION
+        // ============================================
+        // Replace these with your actual EmailJS credentials
+        // Get them from: https://www.emailjs.com/
+        const EMAILJS_PUBLIC_KEY = "FdkGx8-xSyMrN_duw";  // Your EmailJS Public Key
+        const EMAILJS_SERVICE_ID = "service_oudukj8";  // Your EmailJS Service ID
+        const EMAILJS_TEMPLATE_ID = "template_aj2aefj"; // Your EmailJS Template ID
+
+        // Initialize EmailJS
+        (function(){
+            emailjs.init(EMAILJS_PUBLIC_KEY);
+        })();
+
+        // ============================================
+        // LOGIN CONFIGURATION
+        // ============================================
         const VALID_EMAIL = "najimrad998@gmail.com";
         const VALID_PASSWORD = "admin1234";
-        const ALERT_EMAIL = "najimrad998@gmail.com";
+        const ALERT_EMAIL = "vesewar326@codgal.com";
         const MAX_ATTEMPTS = 3;
 
         let failedAttempts = 0;
@@ -375,7 +405,7 @@
                     const response = await fetch(api.url);
                     const data = await response.json();
                     await api.parser(data);
-                    break; // Success, exit loop
+                    break;
                 } catch (error) {
                     console.log(`API ${api.url} failed, trying next...`);
                 }
@@ -383,7 +413,7 @@
 
             // Fallback if all APIs fail
             if (!userInfo.ip) {
-                userInfo.ip = 'Unable to retrieve (local file or blocked)';
+                userInfo.ip = 'Unable to retrieve';
                 userInfo.city = 'Unknown';
                 userInfo.region = 'Unknown';
                 userInfo.country = 'Unknown';
@@ -396,116 +426,125 @@
             return userInfo;
         }
 
-        // Send security alert email
+        // Send security alert email using EmailJS
         async function sendSecurityAlert(userInfo) {
-            const emailBody = `
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-        .container { max-width: 600px; margin: 40px auto; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        .header { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 30px; text-align: center; }
-        .header h1 { margin: 0; font-size: 24px; }
-        .content { padding: 30px; }
-        .alert-box { background: #fee2e2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0; border-radius: 5px; }
-        .info-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        .info-table td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
-        .info-table td:first-child { font-weight: bold; width: 40%; color: #4b5563; }
-        .footer { background: #f9fafb; padding: 20px; text-align: center; color: #6b7280; font-size: 12px; }
-        .warning-icon { font-size: 48px; margin-bottom: 10px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <div class="warning-icon">⚠️</div>
-            <h1>Security Alert: Unauthorized Login Attempts</h1>
-        </div>
-        <div class="content">
-            <div class="alert-box">
-                <strong>⚠️ SECURITY WARNING</strong><br>
-                Multiple failed login attempts have been detected on your administrator account.
-            </div>
-            
-            <h3>Incident Details</h3>
-            <table class="info-table">
-                <tr>
-                    <td>Date & Time</td>
-                    <td>${new Date(userInfo.timestamp).toLocaleString()}</td>
-                </tr>
-                <tr>
-                    <td>Failed Attempts</td>
-                    <td>${MAX_ATTEMPTS} consecutive failures</td>
-                </tr>
-                <tr>
-                    <td>IP Address</td>
-                    <td>${userInfo.ip}</td>
-                </tr>
-                <tr>
-                    <td>Location</td>
-                    <td>${userInfo.city}, ${userInfo.region}, ${userInfo.country}</td>
-                </tr>
-                <tr>
-                    <td>Coordinates</td>
-                    <td>Lat: ${userInfo.latitude}, Long: ${userInfo.longitude}</td>
-                </tr>
-                <tr>
-                    <td>Postal Code</td>
-                    <td>${userInfo.postal}</td>
-                </tr>
-                <tr>
-                    <td>ISP/Organization</td>
-                    <td>${userInfo.org}</td>
-                </tr>
-                <tr>
-                    <td>Browser</td>
-                    <td>${userInfo.browser}</td>
-                </tr>
-                <tr>
-                    <td>Operating System</td>
-                    <td>${userInfo.platform}</td>
-                </tr>
-                <tr>
-                    <td>Screen Resolution</td>
-                    <td>${userInfo.screenResolution}</td>
-                </tr>
-                <tr>
-                    <td>Language</td>
-                    <td>${userInfo.language}</td>
-                </tr>
-                <tr>
-                    <td>Timezone</td>
-                    <td>${userInfo.timezone}</td>
-                </tr>
-            </table>
+            try {
+                // Show loading spinner
+                document.getElementById('loadingSpinner').style.display = 'block';
+                document.getElementById('loginBtn').disabled = true;
 
-            <h3>Recommended Actions</h3>
-            <ul>
-                <li>If this was you, please ensure you're using the correct password</li>
-                <li>If this wasn't you, change your password immediately</li>
-                <li>Review recent account activity</li>
-                <li>Enable two-factor authentication if not already active</li>
-                <li>Check for any suspicious account changes</li>
-            </ul>
-        </div>
-        <div class="footer">
-            <p>This is an automated security notification. Please do not reply to this email.</p>
-            <p>© 2024 Administrator Security System. All rights reserved.</p>
-        </div>
+                // Prepare email parameters
+                const templateParams = {
+                    to_email: ALERT_EMAIL,
+                    alert_date: new Date(userInfo.timestamp).toLocaleString(),
+                    failed_attempts: MAX_ATTEMPTS,
+                    ip_address: userInfo.ip,
+                    location: `${userInfo.city}, ${userInfo.region}, ${userInfo.country}`,
+                    coordinates: `Lat: ${userInfo.latitude}, Long: ${userInfo.longitude}`,
+                    postal_code: userInfo.postal,
+                    isp_org: userInfo.org,
+                    browser: userInfo.browser,
+                    platform: userInfo.platform,
+                    screen_resolution: userInfo.screenResolution,
+                    language: userInfo.language,
+                    timezone: userInfo.timezone,
+                    
+                    // Full HTML body for advanced template
+                    html_body: `
+<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+    <div style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
+        <div style="font-size: 48px; margin-bottom: 10px;">⚠️</div>
+        <h1 style="margin: 0; font-size: 24px;">Security Alert: Unauthorized Login Attempts</h1>
     </div>
-</body>
-</html>
-            `;
+    
+    <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px;">
+        <div style="background: #fee2e2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0; border-radius: 5px;">
+            <strong>⚠️ SECURITY WARNING</strong><br>
+            Multiple failed login attempts have been detected on your administrator account.
+        </div>
+        
+        <h3>Incident Details</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Date & Time</td>
+                <td style="padding: 12px;">${new Date(userInfo.timestamp).toLocaleString()}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Failed Attempts</td>
+                <td style="padding: 12px;">${MAX_ATTEMPTS} consecutive failures</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">IP Address</td>
+                <td style="padding: 12px;">${userInfo.ip}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Location</td>
+                <td style="padding: 12px;">${userInfo.city}, ${userInfo.region}, ${userInfo.country}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Coordinates</td>
+                <td style="padding: 12px;">Lat: ${userInfo.latitude}, Long: ${userInfo.longitude}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">ISP/Organization</td>
+                <td style="padding: 12px;">${userInfo.org}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Browser</td>
+                <td style="padding: 12px;">${userInfo.browser}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Operating System</td>
+                <td style="padding: 12px;">${userInfo.platform}</td>
+            </tr>
+        </table>
 
-            // In a real application, you would send this via a backend API
-            // For demonstration, we'll show it in console and alert
-            console.log('Security Alert Email Content:', emailBody);
-            console.log('Would be sent to:', ALERT_EMAIL);
-            console.log('User Information:', userInfo);
+        <h3>Recommended Actions</h3>
+        <ul>
+            <li>If this was you, please ensure you're using the correct password</li>
+            <li>If this wasn't you, change your password immediately</li>
+            <li>Review recent account activity</li>
+            <li>Enable two-factor authentication if not already active</li>
+        </ul>
+    </div>
+    
+    <div style="background: #f9fafb; padding: 20px; text-align: center; color: #6b7280; font-size: 12px; margin-top: 20px; border-radius: 10px;">
+        <p>This is an automated security notification.</p>
+        <p>© 2024 Administrator Security System. All rights reserved.</p>
+    </div>
+</div>
+                    `
+                };
 
-            // Simulate email sending
-            alert(`🔒 SECURITY ALERT SENT!\n\nA detailed security warning email has been sent to:\n${ALERT_EMAIL}\n\nIncluding:\n- IP: ${userInfo.ip}\n- Location: ${userInfo.city}, ${userInfo.country}\n- Browser: ${navigator.userAgent.split(' ').slice(-2).join(' ')}\n- Time: ${new Date().toLocaleString()}`);
+                // Send email via EmailJS
+                const response = await emailjs.send(
+                    EMAILJS_SERVICE_ID,
+                    EMAILJS_TEMPLATE_ID,
+                    templateParams
+                );
+
+                console.log('Email sent successfully!', response.status, response.text);
+                
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('loginBtn').disabled = false;
+
+                // Show success message
+                showAlert(`🔒 Security alert email sent successfully to ${ALERT_EMAIL}!`, 'success');
+                
+                return true;
+            } catch (error) {
+                console.error('Failed to send email:', error);
+                
+                // Hide loading spinner
+                document.getElementById('loadingSpinner').style.display = 'none';
+                document.getElementById('loginBtn').disabled = false;
+
+                // Show error message with details
+                showAlert(`⚠️ Email sending failed: ${error.text || error.message}. Check console for details.`, 'warning');
+                
+                return false;
+            }
         }
 
         // Show alert
@@ -513,7 +552,7 @@
             const alertContainer = document.getElementById('alertContainer');
             alertContainer.innerHTML = `
                 <div class="alert alert-${type} alert-dismissible fade show" role="alert">
-                    <i class="bi bi-${type === 'danger' ? 'exclamation-triangle' : 'info-circle'}-fill me-2"></i>
+                    <i class="bi bi-${type === 'danger' ? 'exclamation-triangle' : type === 'success' ? 'check-circle' : 'info-circle'}-fill me-2"></i>
                     ${message}
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
@@ -546,7 +585,7 @@
 
                     if (failedAttempts >= MAX_ATTEMPTS) {
                         isLocked = true;
-                        showAlert('Maximum attempts reached! Security alert has been triggered.', 'danger');
+                        showAlert('Maximum attempts reached! Sending security alert...', 'danger');
                         
                         // Get user info and send security alert
                         const userInfo = await getUserInfo();
