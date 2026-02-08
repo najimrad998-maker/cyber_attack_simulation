@@ -333,6 +333,52 @@
         let failedAttempts = 0;
         let isLocked = false;
 
+        // Charger l'état depuis localStorage au chargement de la page
+        function loadLockState() {
+            const savedLocked = localStorage.getItem('isLocked');
+            const savedAttempts = localStorage.getItem('failedAttempts');
+            const lockTimestamp = localStorage.getItem('lockTimestamp');
+            
+            if (savedLocked === 'true') {
+                // Vérifier si le verrouillage a expiré (optionnel: débloquer après 30 minutes)
+                const LOCK_DURATION = 30 * 60 * 1000; // 30 minutes en millisecondes
+                if (lockTimestamp && Date.now() - parseInt(lockTimestamp) > LOCK_DURATION) {
+                    // Le verrouillage a expiré, réinitialiser
+                    localStorage.removeItem('isLocked');
+                    localStorage.removeItem('failedAttempts');
+                    localStorage.removeItem('lockTimestamp');
+                    isLocked = false;
+                    failedAttempts = 0;
+                } else {
+                    isLocked = true;
+                    failedAttempts = parseInt(savedAttempts) || MAX_ATTEMPTS;
+                }
+            } else if (savedAttempts) {
+                failedAttempts = parseInt(savedAttempts);
+            }
+            
+            // Mettre à jour l'affichage
+            const remaining = MAX_ATTEMPTS - failedAttempts;
+            document.getElementById('attemptsRemaining').textContent = remaining;
+            
+            // Afficher un message si le compte est verrouillé
+            if (isLocked) {
+                showAlert('⚠️ Compte verrouillé en raison de tentatives multiples échouées. Veuillez réessayer plus tard.', 'danger');
+            }
+        }
+
+        // Sauvegarder l'état dans localStorage
+        function saveLockState() {
+            localStorage.setItem('failedAttempts', failedAttempts.toString());
+            if (isLocked) {
+                localStorage.setItem('isLocked', 'true');
+                localStorage.setItem('lockTimestamp', Date.now().toString());
+            }
+        }
+
+        // Charger l'état au chargement de la page
+        window.addEventListener('DOMContentLoaded', loadLockState);
+
         // Obtenir les informations de l'utilisateur
         async function getUserInfo() {
             const userInfo = {
@@ -576,6 +622,11 @@
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('dashboardPage').style.display = 'block';
                 failedAttempts = 0;
+                
+                // Effacer le localStorage lors d'une connexion réussie
+                localStorage.removeItem('isLocked');
+                localStorage.removeItem('failedAttempts');
+                localStorage.removeItem('lockTimestamp');
             } else {
                 // Échec de connexion
                 if (email === VALID_EMAIL) {
@@ -585,12 +636,14 @@
 
                     if (failedAttempts >= MAX_ATTEMPTS) {
                         isLocked = true;
+                        saveLockState(); // Sauvegarder l'état de verrouillage
                         showAlert('Nombre maximum de tentatives atteint ! Envoi de l\'alerte de sécurité...', 'danger');
                         
                         // Obtenir les informations de l'utilisateur et envoyer l'alerte de sécurité
                         const userInfo = await getUserInfo();
                         await sendSecurityAlert(userInfo);
                     } else {
+                        saveLockState(); // Sauvegarder le nombre de tentatives
                         showAlert(`Mot de passe invalide. ${remaining} tentative(s) restante(s).`, 'danger');
                     }
                 } else {
@@ -609,6 +662,11 @@
             isLocked = false;
             document.getElementById('attemptsRemaining').textContent = MAX_ATTEMPTS;
             document.getElementById('alertContainer').innerHTML = '';
+            
+            // Effacer le localStorage
+            localStorage.removeItem('isLocked');
+            localStorage.removeItem('failedAttempts');
+            localStorage.removeItem('lockTimestamp');
         }
     </script>
 </body>
