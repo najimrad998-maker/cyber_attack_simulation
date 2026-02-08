@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrator Dashboard</title>
+    <title>Tableau de Bord Administrateur</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
@@ -90,7 +90,7 @@
             border: none;
         }
 
-        /* Dashboard Styles */
+        /* Styles du Tableau de Bord */
         .dashboard-container {
             display: none;
             background: #f3f4f6;
@@ -187,57 +187,57 @@
     </style>
 </head>
 <body>
-    <!-- Login Page -->
+    <!-- Page de Connexion -->
     <div class="login-container" id="loginPage">
         <div class="login-header">
             <i class="bi bi-shield-lock"></i>
-            <h2>Administrator Login</h2>
-            <p class="mb-0">Secure Access Portal</p>
+            <h2>Connexion Administrateur</h2>
+            <p class="mb-0">Portail d'Accès Sécurisé</p>
         </div>
         <div class="login-body">
             <div id="alertContainer"></div>
             <div class="loading-spinner" id="loadingSpinner">
                 <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
+                    <span class="visually-hidden">Chargement...</span>
                 </div>
-                <p class="mt-2">Sending security alert...</p>
+                <p class="mt-2">Envoi de l'alerte de sécurité...</p>
             </div>
             <form id="loginForm">
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email Address</label>
+                    <label for="email" class="form-label">Adresse E-mail</label>
                     <div class="input-group">
                         <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
-                        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                        <input type="email" class="form-control" id="email" placeholder="Entrez votre e-mail" required>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">Mot de Passe</label>
                     <div class="input-group">
                         <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
-                        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                        <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-login" id="loginBtn">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Se Connecter
                 </button>
             </form>
             <div class="text-center mt-3">
-                <small class="text-muted">Attempts remaining: <span id="attemptsRemaining">3</span></small>
+                <small class="text-muted">Tentatives restantes : <span id="attemptsRemaining">3</span></small>
             </div>
         </div>
     </div>
 
-    <!-- Dashboard -->
+    <!-- Tableau de Bord -->
     <div class="dashboard-container" id="dashboardPage">
         <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <i class="bi bi-speedometer2 text-primary"></i>
-                    <strong>Admin Panel</strong>
+                    <strong>Panneau Admin</strong>
                 </a>
                 <div class="ms-auto">
                     <button class="btn btn-outline-danger btn-sm" onclick="logout()">
-                        <i class="bi bi-box-arrow-right"></i> Logout
+                        <i class="bi bi-box-arrow-right"></i> Déconnexion
                     </button>
                 </div>
             </div>
@@ -246,8 +246,8 @@
         <div class="container">
             <div class="welcome-card animate-in">
                 <div class="welcome-header">
-                    <h1><i class="bi bi-person-circle me-3"></i>Welcome Mr Neji</h1>
-                    <p>Administrator Dashboard - Full System Access</p>
+                    <h1><i class="bi bi-person-circle me-3"></i>Bienvenue M. Neji</h1>
+                    <p>Tableau de Bord Administrateur - Accès Complet au Système</p>
                 </div>
 
                 <div class="row g-4 mb-4">
@@ -256,7 +256,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <div class="stat-value">248</div>
-                                    <div class="stat-label">Total Users</div>
+                                    <div class="stat-label">Utilisateurs Totaux</div>
                                 </div>
                                 <i class="bi bi-people"></i>
                             </div>
@@ -266,8 +266,8 @@
                         <div class="stat-card" style="border-left-color: #10b981;">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <div class="stat-value">1,429</div>
-                                    <div class="stat-label">Active Sessions</div>
+                                    <div class="stat-value">1 429</div>
+                                    <div class="stat-label">Sessions Actives</div>
                                 </div>
                                 <i class="bi bi-activity" style="color: #10b981;"></i>
                             </div>
@@ -277,8 +277,8 @@
                         <div class="stat-card" style="border-left-color: #f59e0b;">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <div class="stat-value">99.8%</div>
-                                    <div class="stat-label">System Uptime</div>
+                                    <div class="stat-value">99,8%</div>
+                                    <div class="stat-label">Disponibilité Système</div>
                                 </div>
                                 <i class="bi bi-graph-up-arrow" style="color: #f59e0b;"></i>
                             </div>
@@ -288,16 +288,16 @@
 
                 <div class="alert alert-success">
                     <i class="bi bi-check-circle-fill me-2"></i>
-                    <strong>System Status:</strong> All systems operational. Last security scan completed successfully.
+                    <strong>État du Système :</strong> Tous les systèmes sont opérationnels. Dernière analyse de sécurité terminée avec succès.
                 </div>
 
                 <div class="mt-4">
-                    <h5 class="mb-3"><i class="bi bi-gear-fill text-primary me-2"></i>Quick Actions</h5>
+                    <h5 class="mb-3"><i class="bi bi-gear-fill text-primary me-2"></i>Actions Rapides</h5>
                     <div class="d-flex gap-2 flex-wrap">
-                        <button class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i>Add User</button>
-                        <button class="btn btn-outline-primary"><i class="bi bi-file-earmark-text me-2"></i>View Reports</button>
-                        <button class="btn btn-outline-primary"><i class="bi bi-shield-check me-2"></i>Security Logs</button>
-                        <button class="btn btn-outline-primary"><i class="bi bi-gear me-2"></i>Settings</button>
+                        <button class="btn btn-primary"><i class="bi bi-plus-circle me-2"></i>Ajouter un Utilisateur</button>
+                        <button class="btn btn-outline-primary"><i class="bi bi-file-earmark-text me-2"></i>Voir les Rapports</button>
+                        <button class="btn btn-outline-primary"><i class="bi bi-shield-check me-2"></i>Journaux de Sécurité</button>
+                        <button class="btn btn-outline-primary"><i class="bi bi-gear me-2"></i>Paramètres</button>
                     </div>
                 </div>
             </div>
@@ -305,25 +305,25 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- EmailJS SDK -->
+    <!-- SDK EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
         // ============================================
-        // EMAILJS CONFIGURATION
+        // CONFIGURATION EMAILJS
         // ============================================
-        // Replace these with your actual EmailJS credentials
-        // Get them from: https://www.emailjs.com/
-        const EMAILJS_PUBLIC_KEY = "frwS3FitoVxB4tVat";  // Your EmailJS Public Key
-        const EMAILJS_SERVICE_ID = "service_15n8qhm";  // Your EmailJS Service ID
-        const EMAILJS_TEMPLATE_ID = "template_5h68grt"; // Your EmailJS Template ID
+        // Remplacez ces valeurs par vos identifiants EmailJS réels
+        // Obtenez-les depuis : https://www.emailjs.com/
+        const EMAILJS_PUBLIC_KEY = "frwS3FitoVxB4tVat";  // Votre Clé Publique EmailJS
+        const EMAILJS_SERVICE_ID = "service_15n8qhm";  // Votre ID de Service EmailJS
+        const EMAILJS_TEMPLATE_ID = "template_5h68grt"; // Votre ID de Modèle EmailJS
 
-        // Initialize EmailJS
+        // Initialiser EmailJS
         (function(){
             emailjs.init(EMAILJS_PUBLIC_KEY);
         })();
 
         // ============================================
-        // LOGIN CONFIGURATION
+        // CONFIGURATION DE CONNEXION
         // ============================================
         const VALID_EMAIL = "najimrad998@gmail.com";
         const VALID_PASSWORD = "admin1234";
@@ -333,7 +333,7 @@
         let failedAttempts = 0;
         let isLocked = false;
 
-        // Get user information
+        // Obtenir les informations de l'utilisateur
         async function getUserInfo() {
             const userInfo = {
                 timestamp: new Date().toISOString(),
@@ -348,58 +348,58 @@
                 vendor: navigator.vendor
             };
 
-            // Try multiple IP geolocation services with CORS support
+            // Essayer plusieurs services de géolocalisation IP avec support CORS
             const apis = [
                 {
                     url: 'https://api.ipify.org?format=json',
                     parser: async (data) => {
                         userInfo.ip = data.ip;
-                        // Get location from second API
+                        // Obtenir la localisation depuis une deuxième API
                         try {
                             const locResponse = await fetch(`https://ipapi.co/${data.ip}/json/`);
                             const locData = await locResponse.json();
-                            userInfo.city = locData.city || 'Unknown';
-                            userInfo.region = locData.region || 'Unknown';
-                            userInfo.country = locData.country_name || 'Unknown';
-                            userInfo.postal = locData.postal || 'Unknown';
-                            userInfo.latitude = locData.latitude || 'Unknown';
-                            userInfo.longitude = locData.longitude || 'Unknown';
-                            userInfo.org = locData.org || 'Unknown';
+                            userInfo.city = locData.city || 'Inconnue';
+                            userInfo.region = locData.region || 'Inconnue';
+                            userInfo.country = locData.country_name || 'Inconnu';
+                            userInfo.postal = locData.postal || 'Inconnu';
+                            userInfo.latitude = locData.latitude || 'Inconnue';
+                            userInfo.longitude = locData.longitude || 'Inconnue';
+                            userInfo.org = locData.org || 'Inconnue';
                         } catch (e) {
-                            console.log('Location API failed, using fallback');
+                            console.log('API de localisation échouée, utilisation de la solution de secours');
                         }
                     }
                 },
                 {
                     url: 'https://ipinfo.io/json',
                     parser: (data) => {
-                        userInfo.ip = data.ip || 'Unknown';
-                        const loc = data.loc ? data.loc.split(',') : ['Unknown', 'Unknown'];
-                        userInfo.city = data.city || 'Unknown';
-                        userInfo.region = data.region || 'Unknown';
-                        userInfo.country = data.country || 'Unknown';
-                        userInfo.postal = data.postal || 'Unknown';
+                        userInfo.ip = data.ip || 'Inconnue';
+                        const loc = data.loc ? data.loc.split(',') : ['Inconnue', 'Inconnue'];
+                        userInfo.city = data.city || 'Inconnue';
+                        userInfo.region = data.region || 'Inconnue';
+                        userInfo.country = data.country || 'Inconnu';
+                        userInfo.postal = data.postal || 'Inconnu';
                         userInfo.latitude = loc[0];
                         userInfo.longitude = loc[1];
-                        userInfo.org = data.org || 'Unknown';
+                        userInfo.org = data.org || 'Inconnue';
                     }
                 },
                 {
                     url: 'https://api.db-ip.com/v2/free/self',
                     parser: (data) => {
-                        userInfo.ip = data.ipAddress || 'Unknown';
-                        userInfo.city = data.city || 'Unknown';
-                        userInfo.region = data.stateProv || 'Unknown';
-                        userInfo.country = data.countryName || 'Unknown';
-                        userInfo.latitude = 'Unknown';
-                        userInfo.longitude = 'Unknown';
-                        userInfo.postal = 'Unknown';
-                        userInfo.org = 'Unknown';
+                        userInfo.ip = data.ipAddress || 'Inconnue';
+                        userInfo.city = data.city || 'Inconnue';
+                        userInfo.region = data.stateProv || 'Inconnue';
+                        userInfo.country = data.countryName || 'Inconnu';
+                        userInfo.latitude = 'Inconnue';
+                        userInfo.longitude = 'Inconnue';
+                        userInfo.postal = 'Inconnu';
+                        userInfo.org = 'Inconnue';
                     }
                 }
             ];
 
-            // Try APIs in order until one works
+            // Essayer les API dans l'ordre jusqu'à ce qu'une fonctionne
             for (const api of apis) {
                 try {
                     const response = await fetch(api.url);
@@ -407,40 +407,40 @@
                     await api.parser(data);
                     break;
                 } catch (error) {
-                    console.log(`API ${api.url} failed, trying next...`);
+                    console.log(`API ${api.url} échouée, essai suivant...`);
                 }
             }
 
-            // Fallback if all APIs fail
+            // Solution de secours si toutes les API échouent
             if (!userInfo.ip) {
-                userInfo.ip = 'Unable to retrieve';
-                userInfo.city = 'Unknown';
-                userInfo.region = 'Unknown';
-                userInfo.country = 'Unknown';
-                userInfo.postal = 'Unknown';
-                userInfo.latitude = 'Unknown';
-                userInfo.longitude = 'Unknown';
-                userInfo.org = 'Unknown';
+                userInfo.ip = 'Impossible de récupérer';
+                userInfo.city = 'Inconnue';
+                userInfo.region = 'Inconnue';
+                userInfo.country = 'Inconnu';
+                userInfo.postal = 'Inconnu';
+                userInfo.latitude = 'Inconnue';
+                userInfo.longitude = 'Inconnue';
+                userInfo.org = 'Inconnue';
             }
 
             return userInfo;
         }
 
-        // Send security alert email using EmailJS
+        // Envoyer une alerte de sécurité par e-mail via EmailJS
         async function sendSecurityAlert(userInfo) {
             try {
-                // Show loading spinner
+                // Afficher le spinner de chargement
                 document.getElementById('loadingSpinner').style.display = 'block';
                 document.getElementById('loginBtn').disabled = true;
 
-                // Prepare email parameters
+                // Préparer les paramètres de l'e-mail
                 const templateParams = {
                     to_email: ALERT_EMAIL,
-                    alert_date: new Date(userInfo.timestamp).toLocaleString(),
+                    alert_date: new Date(userInfo.timestamp).toLocaleString('fr-FR'),
                     failed_attempts: MAX_ATTEMPTS,
                     ip_address: userInfo.ip,
                     location: `${userInfo.city}, ${userInfo.region}, ${userInfo.country}`,
-                    coordinates: `Lat: ${userInfo.latitude}, Long: ${userInfo.longitude}`,
+                    coordinates: `Lat : ${userInfo.latitude}, Long : ${userInfo.longitude}`,
                     postal_code: userInfo.postal,
                     isp_org: userInfo.org,
                     browser: userInfo.browser,
@@ -449,105 +449,105 @@
                     language: userInfo.language,
                     timezone: userInfo.timezone,
                     
-                    // Full HTML body for advanced template
+                    // Corps HTML complet pour le modèle avancé
                     html_body: `
 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
     <div style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
         <div style="font-size: 48px; margin-bottom: 10px;">⚠️</div>
-        <h1 style="margin: 0; font-size: 24px;">Security Alert: Unauthorized Login Attempts</h1>
+        <h1 style="margin: 0; font-size: 24px;">Alerte de Sécurité : Tentatives de Connexion Non Autorisées</h1>
     </div>
     
     <div style="background: white; padding: 30px; border-radius: 0 0 10px 10px;">
         <div style="background: #fee2e2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0; border-radius: 5px;">
-            <strong>⚠️ SECURITY WARNING</strong><br>
-            Multiple failed login attempts have been detected on your administrator account.
+            <strong>⚠️ AVERTISSEMENT DE SÉCURITÉ</strong><br>
+            Plusieurs tentatives de connexion échouées ont été détectées sur votre compte administrateur.
         </div>
         
-        <h3>Incident Details</h3>
+        <h3>Détails de l'Incident</h3>
         <table style="width: 100%; border-collapse: collapse;">
             <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Date & Time</td>
-                <td style="padding: 12px;">${new Date(userInfo.timestamp).toLocaleString()}</td>
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Date et Heure</td>
+                <td style="padding: 12px;">${new Date(userInfo.timestamp).toLocaleString('fr-FR')}</td>
             </tr>
             <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Failed Attempts</td>
-                <td style="padding: 12px;">${MAX_ATTEMPTS} consecutive failures</td>
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Tentatives Échouées</td>
+                <td style="padding: 12px;">${MAX_ATTEMPTS} échecs consécutifs</td>
             </tr>
             <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 12px; font-weight: bold; color: #4b5563;">IP Address</td>
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Adresse IP</td>
                 <td style="padding: 12px;">${userInfo.ip}</td>
             </tr>
             <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Location</td>
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Localisation</td>
                 <td style="padding: 12px;">${userInfo.city}, ${userInfo.region}, ${userInfo.country}</td>
             </tr>
             <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Coordinates</td>
-                <td style="padding: 12px;">Lat: ${userInfo.latitude}, Long: ${userInfo.longitude}</td>
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Coordonnées</td>
+                <td style="padding: 12px;">Lat : ${userInfo.latitude}, Long : ${userInfo.longitude}</td>
             </tr>
             <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 12px; font-weight: bold; color: #4b5563;">ISP/Organization</td>
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">FAI/Organisation</td>
                 <td style="padding: 12px;">${userInfo.org}</td>
             </tr>
             <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Browser</td>
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Navigateur</td>
                 <td style="padding: 12px;">${userInfo.browser}</td>
             </tr>
             <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Operating System</td>
+                <td style="padding: 12px; font-weight: bold; color: #4b5563;">Système d'Exploitation</td>
                 <td style="padding: 12px;">${userInfo.platform}</td>
             </tr>
         </table>
 
-        <h3>Recommended Actions</h3>
+        <h3>Actions Recommandées</h3>
         <ul>
-            <li>If this was you, please ensure you're using the correct password</li>
-            <li>If this wasn't you, change your password immediately</li>
-            <li>Review recent account activity</li>
-            <li>Enable two-factor authentication if not already active</li>
+            <li>Si c'était vous, assurez-vous d'utiliser le bon mot de passe</li>
+            <li>Si ce n'était pas vous, changez votre mot de passe immédiatement</li>
+            <li>Examinez l'activité récente du compte</li>
+            <li>Activez l'authentification à deux facteurs si elle n'est pas déjà active</li>
         </ul>
     </div>
     
     <div style="background: #f9fafb; padding: 20px; text-align: center; color: #6b7280; font-size: 12px; margin-top: 20px; border-radius: 10px;">
-        <p>This is an automated security notification.</p>
-        <p>© 2026 Administrator Security System. All rights reserved.</p>
+        <p>Ceci est une notification de sécurité automatisée.</p>
+        <p>© 2026 Système de Sécurité Administrateur. Tous droits réservés.</p>
     </div>
 </div>
                     `
                 };
 
-                // Send email via EmailJS
+                // Envoyer l'e-mail via EmailJS
                 const response = await emailjs.send(
                     EMAILJS_SERVICE_ID,
                     EMAILJS_TEMPLATE_ID,
                     templateParams
                 );
 
-                console.log('Email sent successfully!', response.status, response.text);
+                console.log('E-mail envoyé avec succès !', response.status, response.text);
                 
-                // Hide loading spinner
+                // Masquer le spinner de chargement
                 document.getElementById('loadingSpinner').style.display = 'none';
                 document.getElementById('loginBtn').disabled = false;
 
-                // Show success message
-                showAlert(`🔒 Security alert email sent successfully to ${ALERT_EMAIL}!`, 'success');
+                // Afficher le message de succès
+                showAlert(`🔒 E-mail d'alerte de sécurité envoyé avec succès à ${ALERT_EMAIL} !`, 'success');
                 
                 return true;
             } catch (error) {
-                console.error('Failed to send email:', error);
+                console.error('Échec de l\'envoi de l\'e-mail :', error);
                 
-                // Hide loading spinner
+                // Masquer le spinner de chargement
                 document.getElementById('loadingSpinner').style.display = 'none';
                 document.getElementById('loginBtn').disabled = false;
 
-                // Show error message with details
-                showAlert(`⚠️ Email sending failed: ${error.text || error.message}. Check console for details.`, 'warning');
+                // Afficher le message d'erreur avec détails
+                showAlert(`⚠️ Échec de l'envoi de l'e-mail : ${error.text || error.message}. Consultez la console pour plus de détails.`, 'warning');
                 
                 return false;
             }
         }
 
-        // Show alert
+        // Afficher une alerte
         function showAlert(message, type) {
             const alertContainer = document.getElementById('alertContainer');
             alertContainer.innerHTML = `
@@ -559,12 +559,12 @@
             `;
         }
 
-        // Login form handler
+        // Gestionnaire du formulaire de connexion
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             if (isLocked) {
-                showAlert('Account temporarily locked due to multiple failed attempts.', 'danger');
+                showAlert('Compte temporairement verrouillé en raison de plusieurs tentatives échouées.', 'danger');
                 return;
             }
 
@@ -572,12 +572,12 @@
             const password = document.getElementById('password').value;
 
             if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-                // Successful login
+                // Connexion réussie
                 document.getElementById('loginPage').style.display = 'none';
                 document.getElementById('dashboardPage').style.display = 'block';
                 failedAttempts = 0;
             } else {
-                // Failed login
+                // Échec de connexion
                 if (email === VALID_EMAIL) {
                     failedAttempts++;
                     const remaining = MAX_ATTEMPTS - failedAttempts;
@@ -585,21 +585,21 @@
 
                     if (failedAttempts >= MAX_ATTEMPTS) {
                         isLocked = true;
-                        showAlert('Maximum attempts reached! Sending security alert...', 'danger');
+                        showAlert('Nombre maximum de tentatives atteint ! Envoi de l\'alerte de sécurité...', 'danger');
                         
-                        // Get user info and send security alert
+                        // Obtenir les informations de l'utilisateur et envoyer l'alerte de sécurité
                         const userInfo = await getUserInfo();
                         await sendSecurityAlert(userInfo);
                     } else {
-                        showAlert(`Invalid password. ${remaining} attempt(s) remaining.`, 'danger');
+                        showAlert(`Mot de passe invalide. ${remaining} tentative(s) restante(s).`, 'danger');
                     }
                 } else {
-                    showAlert('Invalid email address.', 'danger');
+                    showAlert('Adresse e-mail invalide.', 'danger');
                 }
             }
         });
 
-        // Logout function
+        // Fonction de déconnexion
         function logout() {
             document.getElementById('dashboardPage').style.display = 'none';
             document.getElementById('loginPage').style.display = 'block';
